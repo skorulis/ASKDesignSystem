@@ -22,7 +22,7 @@ let package = Package(
             name: "ASKDesignSystem",
             dependencies: [],
             path: "Sources",
-            resources: [.process("Resources")]
+            resources: [.process("Resource")]
         ),
         .testTarget(
             name: "ASKDesignSystemTests",

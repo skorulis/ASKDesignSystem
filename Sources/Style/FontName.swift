@@ -36,7 +36,7 @@ private extension FontName {
 #endif
         
         for font in allCases {
-            Bundle.main.registerFont(name: font.rawValue, ext: font.ext)
+            Bundle.workaround.registerFont(name: font.rawValue, ext: font.ext)
         }
     }()
     
