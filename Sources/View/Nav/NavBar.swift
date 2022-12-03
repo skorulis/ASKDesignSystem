@@ -89,8 +89,16 @@ extension NavBar: View {
         ZStack(alignment: .bottom) {
             items
                 .frame(height: 44)
-            Divider()
         }
+        .background(
+            CornerBottomShape()
+                .fill(Color.ask.navBarBackground)
+                .shadow(
+                    color: .ask.primary.opacity(0.2),
+                    radius: 1,
+                    y: 2
+                )
+        )
     }
     
     @ViewBuilder

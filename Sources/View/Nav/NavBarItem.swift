@@ -53,10 +53,10 @@ private extension NavBarItem {
         
         var body: some View {
             Button(action: back) {
-                Image(systemName: "chevron.backward")
+                Image("chevron-left", bundle: .workaround)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
+                    .frame(width: 24, height: 24)
                     .foregroundColor(.black)
             }
             .frame(width: 40, height: 40)

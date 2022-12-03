@@ -24,6 +24,16 @@ public struct CorePalette {
     
 }
 
+// MARK: - Semantic colors
+
+extension CorePalette {
+    
+    public var navBarBackground: Color {
+        brand
+    }
+    
+}
+
 extension Color {
     static var ask: CorePalette = CorePalette()
 }

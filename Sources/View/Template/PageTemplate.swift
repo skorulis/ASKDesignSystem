@@ -22,16 +22,26 @@ public struct PageTemplate<Nav: View, Content: View> {
 extension PageTemplate: View {
     
     public var body: some View {
-        VStack(spacing: 0) {
+        ZStack {
+            Color.ask.navBarBackground
+                .ignoresSafeArea()
+            foregroundContent
+        }
+            .navigationBarHidden(true)
+    }
+    
+    private var foregroundContent: some View {
+        VStack(spacing: -10) {
             nav()
+                .zIndex(2)
             ScrollView {
                 Spacer()
-                    .frame(height: 12)
+                    .frame(height: 22)
                 content()
             }
+            .background(Color.ask.background)
             .frame(maxWidth: .infinity)
         }
-        .navigationBarHidden(true)
     }
 }
 
@@ -43,8 +53,14 @@ struct PageTemplate_Previews: PreviewProvider {
         PageTemplate {
             NavBar(left: .back({}), mid: .title("Title"))
         } content: {
-            Text("TEst")
-            
+            VStack(spacing: 2) {
+                ForEach(0..<100) { index in
+                    Text("TEst \(index)")
+                        .frame(maxWidth: .infinity)
+                        .background(Color.gray)
+                        
+                }
+            }
         }
 
     }
