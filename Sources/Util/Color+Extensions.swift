@@ -130,3 +130,10 @@ public extension Color {
     }
     
 }
+
+internal extension Color {
+    
+    func contrastRatio(with color: Color) -> CGFloat {
+        return NativeColor(self).contrastRatio(with: NativeColor(color))
+    }
+}
