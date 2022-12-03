@@ -38,12 +38,18 @@ extension NativeColor {
     
     func darken(percentage: CGFloat) -> NativeColor {
         assert(percentage >= 0, "Percentage must be positive")
-        return adjust(percentage: -percentage)
+        return adjustBrightness(percentage: -percentage)
     }
     
     func lighten(percentage: CGFloat) -> NativeColor {
         assert(percentage >= 0, "Percentage must be positive")
-        return adjust(percentage: percentage)
+        return adjustBrightness(percentage: percentage)
+    }
+    
+    func saturate(percentage: CGFloat) -> NativeColor {
+        var (h, s, b, a) = hsba
+        s = min(max(s + percentage, 0), 1);
+        return NativeColor(hue: h, saturation: s, brightness: b, alpha: a)
     }
     
     func mix(other: NativeColor, pct: CGFloat) -> NativeColor {
@@ -58,7 +64,7 @@ extension NativeColor {
         return NativeColor(red: r, green: g, blue: b, alpha: a)
     }
     
-    private func adjust(percentage: CGFloat) -> NativeColor {
+    private func adjustBrightness(percentage: CGFloat) -> NativeColor {
         var (h, s, b, a) = hsba
         b = min(max(b + percentage, 0), 1);
         return NativeColor(hue: h, saturation: s, brightness: b, alpha: a)

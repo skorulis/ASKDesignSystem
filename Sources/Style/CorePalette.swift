@@ -29,7 +29,7 @@ public struct CorePalette {
 extension CorePalette {
     
     public var navBarBackground: Color {
-        brand
+        brand.saturate(percentage: -0.1)
     }
     
 }

@@ -117,6 +117,11 @@ public extension Color {
         return Color(nativeColor: uiColor)
     }
     
+    func saturate(percentage: CGFloat) -> Color {
+        let uiColor = NativeColor(self).saturate(percentage: percentage)
+        return Color(nativeColor: uiColor)
+    }
+    
     var hsba: (CGFloat, CGFloat, CGFloat, CGFloat) {
         return NativeColor(self).hsba
     }
