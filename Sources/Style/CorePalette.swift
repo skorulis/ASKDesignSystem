@@ -3,20 +3,29 @@
 import Foundation
 import SwiftUI
 
-enum CorePalette {
+public struct CorePalette {
     
-    static var red = Color(0xe74c3c, alpha: 1)
-    static var blue = Color(0x3498db, alpha: 1)
-    static var green = Color(0x2ecc71, alpha: 1)
-    static var purple = Color(0x9b59b6, alpha: 1)
+    static var red = Color(0xe74c3c)
+    static var orange = Color(0xfb8500)
+    static var blue = Color(0x8ecae6)
+    static var teal = Color(0x219ebc)
+    static var yellow = Color(0xffb703)
+    static var green = Color(0x2ecc71)
+    static var purple = Color(0x9b59b6)
+    static var black = Color(0x0A0A0A)
     
-    static var primary: Color = Color(0x0A0A0A, alpha: 1)
-    static var brand: Color = blue
-    static var secondary: Color = green
-    static var tertiary: Color = purple
-    static var error: Color = red
-    static var background: Color = .white //Color(0xF0F0F0, alpha: 1)
+    public let primary: Color = black
+    public let secondaryText: Color = black.lighten(percentage: 0.4)
+    public let brand: Color = blue
+    public let secondary: Color = teal
+    public let tertiary: Color = yellow
+    public let error: Color = orange
+    public let background: Color = .white //Color(0xF0F0F0, alpha: 1)
     
+}
+
+extension Color {
+    static var ask: CorePalette = CorePalette()
 }
 
 // MARK: - Previews
@@ -30,22 +39,23 @@ struct CorePalette_Previews: PreviewProvider {
         var id: String { name }
         
         var contrast1: CGFloat {
-            return color.contrastRatio(with: CorePalette.primary)
+            return color.contrastRatio(with: .ask.primary)
         }
         
         var contrast2: CGFloat {
-            return color.contrastRatio(with: CorePalette.background)
+            return color.contrastRatio(with: .ask.background)
         }
     }
     
     static var items: [ColorItem] {
         return [
-            .init(color: CorePalette.primary, name: "primary"),
-            .init(color: CorePalette.background, name: "background"),
-            .init(color: CorePalette.brand, name: "brand"),
-            .init(color: CorePalette.secondary, name: "secondary"),
-            .init(color: CorePalette.tertiary, name: "tertiary"),
-            .init(color: CorePalette.error, name: "error"),
+            .init(color: .ask.primary, name: "primary"),
+            .init(color: .ask.secondaryText, name: "secondaryText"),
+            .init(color: .ask.background, name: "background"),
+            .init(color: .ask.brand, name: "brand"),
+            .init(color: .ask.secondary, name: "secondary"),
+            .init(color: .ask.tertiary, name: "tertiary"),
+            .init(color: .ask.error, name: "error"),
         ]
     }
     
@@ -54,14 +64,14 @@ struct CorePalette_Previews: PreviewProvider {
             ForEach(items) { item in
                 ZStack(alignment: .leading) {
                     item.color
-                    VStack {
+                    VStack(alignment: .leading) {
                         Text("\(item.name) \(item.contrast1)")
                             .typography(.title)
-                            .foregroundColor(CorePalette.primary)
+                            .foregroundColor(.ask.primary)
                         
                         Text("\(item.name) \(item.contrast2)")
                             .typography(.title)
-                            .foregroundColor(CorePalette.background)
+                            .foregroundColor(.ask.background)
                     }
                     .padding(10)
                 }
