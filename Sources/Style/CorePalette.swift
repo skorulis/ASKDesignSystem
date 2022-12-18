@@ -13,6 +13,7 @@ public struct CorePalette {
     static var green = Color(0x2ecc71)
     static var purple = Color(0x9b59b6)
     static var black = Color(0x0A0A0A)
+    static var white = Color(0xFFFFFF)
     
     public let primary: Color = black
     public let secondaryText: Color = black.lighten(percentage: 0.4)
@@ -29,7 +30,11 @@ public struct CorePalette {
 extension CorePalette {
     
     public var navBarBackground: Color {
-        brand.saturate(percentage: -0.1)
+        CorePalette.black
+    }
+    
+    public var navBarContent: Color {
+        CorePalette.white
     }
     
 }

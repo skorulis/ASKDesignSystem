@@ -90,6 +90,7 @@ extension NavBar: View {
             items
                 .frame(height: 44)
         }
+        .foregroundColor(Color.ask.navBarContent)
         .background(
             CornerBottomShape()
                 .fill(Color.ask.navBarBackground)
