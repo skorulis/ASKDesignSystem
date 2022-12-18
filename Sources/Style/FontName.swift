@@ -9,7 +9,7 @@ import AppKit
 #endif
 
 
-enum FontName: String, CaseIterable {
+public enum FontName: String, CaseIterable {
     
     case light = "Figtree-Light"
     case medium = "Figtree-Medium"

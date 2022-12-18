@@ -3,7 +3,7 @@
 import Foundation
 import SwiftUI
 
-enum Typography: String, CaseIterable {
+public enum Typography: String, CaseIterable, Identifiable {
     
     case headline
     case title
@@ -14,7 +14,7 @@ enum Typography: String, CaseIterable {
     
 }
 
-extension Typography: Identifiable {
+public extension Typography {
     
     var size: CGFloat {
         switch self {
@@ -46,7 +46,7 @@ extension Typography: Identifiable {
     
 }
 
-extension Text {
+public extension Text {
     
     func typography(_ type: Typography) -> Text {
         self
