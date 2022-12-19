@@ -1,0 +1,6 @@
+xcassets:
+  inputs:
+    - Sources/Resource/Icons.xcassets
+  outputs:
+    - templatePath: Config/Icons.stencil
+      output: Sources/Style/Icons.swift
