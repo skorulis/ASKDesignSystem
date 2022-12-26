@@ -5,11 +5,12 @@ import SwiftUI
 
 public struct CorePalette {
     
-    static var red = Color(0xe74c3c)
-    static var orange = Color(0xfb8500)
-    static var blue = Color(0x8ecae6)
-    static var teal = Color(0x219ebc)
-    static var yellow = Color(0xffb703)
+    static var red = Color(0xf07167)
+    static var orange = Color(0xfed9b7)
+    static var pink = Color(0xf72585)
+    static var blue = Color(0x0081a7)
+    static var teal = Color(0x00afb9)
+    static var yellow = Color(0xfdfcdc)
     static var green = Color(0x2ecc71)
     static var purple = Color(0x9b59b6)
     static var black = Color(0x0A0A0A)
@@ -20,8 +21,53 @@ public struct CorePalette {
     public let brand: Color = blue
     public let secondary: Color = teal
     public let tertiary: Color = yellow
-    public let error: Color = orange
+    public let error: Color = red
     public let background: Color = .white //Color(0xF0F0F0, alpha: 1)
+    
+    public func contrasting(_ color: Color) -> Color {
+        return cache.contrasts[color] ?? self.primary
+    }
+    
+    private var cache: CorePaletteCache!
+    
+    private func buildCache() -> CorePaletteCache {
+        var contrasts = [Color: Color]()
+        let toCheck = [
+            Self.red,
+            Self.orange,
+            Self.pink,
+            Self.blue,
+            Self.teal,
+            Self.yellow
+        ]
+        let options = [self.primary, self.background]
+        for col in toCheck {
+            contrasts[col] = CorePaletteCache.contrasting(col, options)
+        }
+        return CorePaletteCache(contrasts: contrasts)
+    }
+    
+    public init() {
+        self.cache = buildCache()
+    }
+}
+
+struct CorePaletteCache {
+    
+    let contrasts: [Color: Color]
+    
+    fileprivate static func contrasting(_ color: Color, _ options: [Color]) -> Color {
+        var best = options[0]
+        var bestValue = color.contrastRatio(with: options[0])
+        for opt in options {
+            let contrast = color.contrastRatio(with: opt)
+            if contrast > bestValue {
+                bestValue = contrast
+                best = opt
+            }
+        }
+        return best
+    }
     
 }
 
