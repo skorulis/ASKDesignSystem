@@ -27,7 +27,9 @@ extension PageTemplate: View {
                 .ignoresSafeArea()
             foregroundContent
         }
-            .navigationBarHidden(true)
+#if os(iOS)
+        .navigationBarHidden(true)
+#endif
     }
     
     private var foregroundContent: some View {

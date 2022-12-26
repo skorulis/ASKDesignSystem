@@ -29,8 +29,9 @@ extension ListTemplate: View {
             foregroundContent
                 .clipShape(ExtendedBottomRectangleShape())
         }
-        
+        #if os(iOS)
         .navigationBarHidden(true)
+        #endif
     }
     
     private var foregroundContent: some View {

@@ -1,5 +1,7 @@
 //  Created by Alexander Skorulis on 15/10/2022.
 
+#if canImport(UIKit)
+
 import UIKit
 import SwiftUI
 
@@ -23,3 +25,5 @@ public struct ActivityViewController: UIViewControllerRepresentable {
     public func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
 
 }
+
+#endif
