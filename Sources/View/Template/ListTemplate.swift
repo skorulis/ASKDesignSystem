@@ -23,7 +23,7 @@ extension ListTemplate: View {
     
     public var body: some View {
         ZStack {
-            Color.ask.navBarBackground
+            NavViewBackground()
                 .ignoresSafeArea()
             
             foregroundContent
