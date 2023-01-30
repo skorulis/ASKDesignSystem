@@ -126,6 +126,10 @@ public extension Color {
         return NativeColor(self).hsba
     }
     
+    var hsla: (CGFloat, CGFloat, CGFloat, CGFloat) {
+        return NativeColor(self).hsla
+    }
+    
     var brightness: CGFloat {
         return NativeColor(self).brightness
     }

@@ -8,6 +8,7 @@ public enum Typography: String, CaseIterable, Identifiable {
     case headline
     case title
     case subtitle
+    case largeBody
     case body
     case smallBody
     case caption
@@ -21,6 +22,7 @@ public extension Typography {
         case .headline: return 48
         case .title: return 24
         case .subtitle: return 22
+        case .largeBody: return 20
         case .body: return 18
         case .smallBody: return 16
         case .caption: return 12
@@ -32,6 +34,7 @@ public extension Typography {
         case .headline: return .bold
         case .title: return .bold
         case .subtitle: return .bold
+        case .largeBody: return .bold
         case .body: return .medium
         case .smallBody: return .medium
         case .caption: return .light

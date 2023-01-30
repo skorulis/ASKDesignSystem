@@ -9,6 +9,23 @@ import AppKit
 
 extension NativeColor {
     
+    convenience init(hue: CGFloat, saturation: CGFloat, lightness: CGFloat, alpha: CGFloat) {
+        precondition(0...1 ~= hue && 0...1 ~= saturation && 0...1 ~= lightness && 0...1 ~= alpha, "input range is out of range 0...1")
+                
+        //From HSL TO HSB ---------
+        var newSaturation: CGFloat = 0.0
+        
+        let brightness = lightness + saturation * min(lightness, 1-lightness)
+        
+        if brightness == 0 { newSaturation = 0.0 }
+        else {
+            newSaturation = 2 * (1 - lightness / brightness)
+        }
+        //---------
+        
+        self.init(hue: hue, saturation: newSaturation, brightness: brightness, alpha: alpha)
+    }
+    
     var hsba: (CGFloat, CGFloat, CGFloat, CGFloat) {
         var h: CGFloat = 0
         var s: CGFloat = 0
@@ -16,6 +33,20 @@ extension NativeColor {
         var a: CGFloat = 0
         getHue(&h, saturation: &s, brightness: &b, alpha: &a)
         return (h,s,b,a)
+    }
+    
+    var hsla: (CGFloat, CGFloat, CGFloat, CGFloat) {
+        var (h, s, b, a) = hsba
+        let l = ((2.0 - s) * b) / 2.0
+        switch l {
+        case 0.0, 1.0:
+            s = 0.0
+        case 0.0..<0.5:
+            s = (s * b) / (l * 2.0)
+        default:
+            s = (s * b) / (2.0 - l * 2.0)
+        }
+        return (h, s, l, a)
     }
     
     var rgba: (CGFloat, CGFloat, CGFloat, CGFloat) {
@@ -52,6 +83,7 @@ extension NativeColor {
         return NativeColor(hue: h, saturation: s, brightness: b, alpha: a)
     }
     
+    
     func mix(other: NativeColor, pct: CGFloat) -> NativeColor {
         let (r1, g1, b1, a1) = rgba
         let (r2, g2, b2, a2) = other.rgba
@@ -69,7 +101,6 @@ extension NativeColor {
         b = min(max(b + percentage, 0), 1);
         return NativeColor(hue: h, saturation: s, brightness: b, alpha: a)
     }
-    
     
 }
 

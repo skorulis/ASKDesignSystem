@@ -21,6 +21,7 @@ public struct CorePalette {
     public let brand: Color = blue
     public let secondary: Color = teal
     public let tertiary: Color = yellow
+    public let success: Color = green
     public let error: Color = red
     public let background: Color = .white //Color(0xF0F0F0, alpha: 1)
     
@@ -85,14 +86,40 @@ extension CorePalette {
     
 }
 
-extension Color {
+public extension Color {
     static var ask: CorePalette = CorePalette()
+    
+    func adjust(lightness: Double) -> Color {
+        var col = self.hsla
+        col.2 += lightness
+        col.2 = max(min(col.2, 1), 0)
+        let native = NativeColor(
+            hue: col.0,
+            saturation: col.1,
+            lightness: col.2,
+            alpha: col.3
+        )
+        return Color(nativeColor: native)
+    }
 }
 
 // MARK: - Previews
 
 struct CorePalette_Previews: PreviewProvider {
- 
+    
+    private static let steps: [Double] = [
+        0.44,
+        0.40,
+        0.36,
+        0.27,
+        0.18,
+        0.09,
+        0.0,
+        -0.09,
+        -0.18,
+        -0.27
+    ]
+    
     struct ColorItem: Identifiable {
         let color: Color
         let name: String
@@ -116,11 +143,35 @@ struct CorePalette_Previews: PreviewProvider {
             .init(color: .ask.brand, name: "brand"),
             .init(color: .ask.secondary, name: "secondary"),
             .init(color: .ask.tertiary, name: "tertiary"),
+            .init(color: .ask.success, name: "success"),
             .init(color: .ask.error, name: "error"),
         ]
     }
     
+    @ViewBuilder
     static var previews: some View {
+        basePalette
+            .previewDisplayName("Base Palette")
+        HStack {
+            scale(color: .ask.success)
+            scale(color: .ask.error)
+            scale(color: .ask.brand)
+            scale(color: .ask.secondary)
+            scale(color: .ask.tertiary)
+        }
+            .previewDisplayName("Scale")
+        
+    }
+    
+    private static func scale(color: Color) -> some View {
+        VStack {
+            ForEach(steps, id: \.self) { step in
+                ColorCell(color: color.adjust(lightness: step))
+            }
+        }
+    }
+    
+    private static var basePalette: some View {
         VStack(alignment: .leading, spacing: 12) {
             ForEach(items) { item in
                 ZStack(alignment: .leading) {
@@ -139,8 +190,17 @@ struct CorePalette_Previews: PreviewProvider {
                 .frame(height: 70)
                 
             }
-            
         }
+    }
+    
+    struct ColorCell: View {
+        let color: Color
+        
+        var body: some View {
+            color
+                .frame(height: 50)
+        }
+        
     }
     
 }
