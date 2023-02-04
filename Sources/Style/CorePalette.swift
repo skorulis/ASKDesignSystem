@@ -5,21 +5,21 @@ import SwiftUI
 
 public struct CorePalette {
     
-    static var red = Color(0xf07167)
+    static var red = Color(0xc0392b)
     static var orange = Color(0xfed9b7)
     static var pink = Color(0xf72585)
-    static var blue = Color(0x0081a7)
+    static var blue = Color(0x2980b9)
     static var teal = Color(0x00afb9)
-    static var yellow = Color(0xfdfcdc)
-    static var green = Color(0x2ecc71)
-    static var purple = Color(0x9b59b6)
+    static var purple = Color(0x8e44ad)
+    static var yellow = Color(0xf1c40f)
+    static var green = Color(0x27ae60)
     static var black = Color(0x0A0A0A)
     static var white = Color(0xFFFFFF)
     
     public let primary: Color = black
     public let secondaryText: Color = black.lighten(percentage: 0.4)
     public let brand: Color = blue
-    public let secondary: Color = teal
+    public let secondary: Color = purple
     public let tertiary: Color = yellow
     public let success: Color = green
     public let error: Color = red
@@ -39,11 +39,16 @@ public struct CorePalette {
             Self.pink,
             Self.blue,
             Self.teal,
+            Self.purple,
             Self.yellow
         ]
         let options = [self.primary, self.background]
         for col in toCheck {
-            contrasts[col] = CorePaletteCache.contrasting(col, options)
+            for step in PaletteStep.allCases {
+                let adjusted = col.step(step)
+                contrasts[adjusted] = CorePaletteCache.contrasting(adjusted, options)
+            }
+            
         }
         return CorePaletteCache(contrasts: contrasts)
     }
@@ -89,36 +94,35 @@ extension CorePalette {
 public extension Color {
     static var ask: CorePalette = CorePalette()
     
-    func adjust(lightness: Double) -> Color {
-        var col = self.hsla
-        col.2 += lightness
-        col.2 = max(min(col.2, 1), 0)
-        let native = NativeColor(
-            hue: col.0,
-            saturation: col.1,
-            lightness: col.2,
-            alpha: col.3
-        )
-        return Color(nativeColor: native)
+    func step(_ num: PaletteStep) -> Color {
+        return self.lighten(percentage: num.lightness)
     }
+}
+
+public enum PaletteStep: String, CaseIterable, Identifiable {
+    case zero, one, two, three, four, five, six, seven, eight, nine
+    
+    var lightness: CGFloat {
+        switch self {
+        case .zero: return 0.44
+        case .one: return 0.4
+        case .two: return 0.36
+        case .three: return 0.27
+        case .four: return 0.18
+        case .five: return 0.09
+        case .six: return 0
+        case .seven: return -0.09
+        case .eight: return -0.18
+        case .nine: return -0.27
+        }
+    }
+    
+    public var id: String { rawValue }
 }
 
 // MARK: - Previews
 
 struct CorePalette_Previews: PreviewProvider {
-    
-    private static let steps: [Double] = [
-        0.44,
-        0.40,
-        0.36,
-        0.27,
-        0.18,
-        0.09,
-        0.0,
-        -0.09,
-        -0.18,
-        -0.27
-    ]
     
     struct ColorItem: Identifiable {
         let color: Color
@@ -165,8 +169,8 @@ struct CorePalette_Previews: PreviewProvider {
     
     private static func scale(color: Color) -> some View {
         VStack {
-            ForEach(steps, id: \.self) { step in
-                ColorCell(color: color.adjust(lightness: step))
+            ForEach(PaletteStep.allCases) { step in
+                ColorStepCell(color: color, step: step)
             }
         }
     }
@@ -193,12 +197,18 @@ struct CorePalette_Previews: PreviewProvider {
         }
     }
     
-    struct ColorCell: View {
+    struct ColorStepCell: View {
         let color: Color
+        let step: PaletteStep
         
         var body: some View {
-            color
-                .frame(height: 50)
+            ZStack(alignment: .leading) {
+                color.step(step)
+                    .frame(height: 50)
+                Text(step.rawValue)
+                    .padding()
+            }
+            
         }
         
     }

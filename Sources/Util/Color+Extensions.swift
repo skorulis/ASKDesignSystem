@@ -102,11 +102,6 @@ public extension Color {
         }
     }
     
-    func darken(percentage: CGFloat) -> Color {
-        let uiColor = NativeColor(self).darken(percentage: percentage)
-        return Color(nativeColor: uiColor)
-    }
-    
     func mix(other: Color, pct: CGFloat) -> Color {
         let uiColor = NativeColor(self).mix(other: NativeColor(other), pct: pct)
         return Color(nativeColor: uiColor)

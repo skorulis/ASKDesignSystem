@@ -67,16 +67,6 @@ extension NativeColor {
         return hsba.1
     }
     
-    func darken(percentage: CGFloat) -> NativeColor {
-        assert(percentage >= 0, "Percentage must be positive")
-        return adjustBrightness(percentage: -percentage)
-    }
-    
-    func lighten(percentage: CGFloat) -> NativeColor {
-        assert(percentage >= 0, "Percentage must be positive")
-        return adjustBrightness(percentage: percentage)
-    }
-    
     func saturate(percentage: CGFloat) -> NativeColor {
         var (h, s, b, a) = hsba
         s = min(max(s + percentage, 0), 1);
@@ -100,6 +90,18 @@ extension NativeColor {
         var (h, s, b, a) = hsba
         b = min(max(b + percentage, 0), 1);
         return NativeColor(hue: h, saturation: s, brightness: b, alpha: a)
+    }
+    
+    func lighten(percentage: CGFloat) -> NativeColor {
+        var col = self.hsla
+        col.2 += percentage
+        col.2 = max(min(col.2, 1), 0)
+        return NativeColor(
+            hue: col.0,
+            saturation: col.1,
+            lightness: col.2,
+            alpha: col.3
+        )
     }
     
 }
