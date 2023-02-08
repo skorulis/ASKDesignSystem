@@ -22,11 +22,7 @@ public struct PageTemplate<Nav: View, Content: View> {
 extension PageTemplate: View {
     
     public var body: some View {
-        ZStack {
-            NavViewBackground()
-                .ignoresSafeArea()
-            foregroundContent
-        }
+        foregroundContent
 #if os(iOS)
         .navigationBarHidden(true)
 #endif

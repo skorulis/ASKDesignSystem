@@ -34,12 +34,13 @@ public struct CorePalette {
     private func buildCache() -> CorePaletteCache {
         var contrasts = [Color: Color]()
         let toCheck = [
-            Self.red,
+            Self.blue,
+            Self.green,
             Self.orange,
             Self.pink,
-            Self.blue,
-            Self.teal,
             Self.purple,
+            Self.red,
+            Self.teal,
             Self.yellow
         ]
         let options = [self.primary, self.background]
@@ -206,10 +207,12 @@ struct CorePalette_Previews: PreviewProvider {
                 color.step(step)
                     .frame(height: 50)
                 Text(step.rawValue)
+                    .foregroundColor(.ask.contrasting(adjustedColor))
                     .padding()
             }
-            
         }
+        
+        private var adjustedColor: Color { color.step(step) }
         
     }
     

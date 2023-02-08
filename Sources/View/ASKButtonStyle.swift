@@ -79,17 +79,23 @@ public extension ASKButtonStyle {
         
         var fillColor: Color {
             switch self {
-            case .primary: return .ask.brand
-            case .outline: return .ask.background
-            case .error: return .ask.error
+            case .primary:
+                return .ask.brand.step(.four)
+            case .outline:
+                return .ask.background
+            case .error:
+                return .ask.error.step(.four)
             }
         }
         
         var strokeColor: Color? {
             switch self {
-            case .primary: return nil
-            case .outline: return .ask.primary
-            case .error: return nil
+            case .primary:
+                return .ask.brand.step(.seven)
+            case .outline:
+                return .ask.primary
+            case .error:
+                return .ask.error.step(.seven)
             }
         }
         
