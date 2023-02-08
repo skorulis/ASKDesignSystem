@@ -16,7 +16,8 @@ extension NavViewBackground: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Color.ask.navBarBackground
+            Color.clear
+                .background(.ultraThinMaterial)
                 .frame(height: 60)
             
             Color.white

@@ -27,7 +27,6 @@ extension ListTemplate: View {
                 .ignoresSafeArea()
             
             foregroundContent
-                .clipShape(ExtendedBottomRectangleShape())
         }
         #if os(iOS)
         .navigationBarHidden(true)
