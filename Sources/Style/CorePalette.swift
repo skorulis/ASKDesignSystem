@@ -13,17 +13,23 @@ public struct CorePalette {
     static var purple = Color(0x8e44ad)
     static var yellow = Color(0xf1c40f)
     static var green = Color(0x27ae60)
-    static var black = Color(0x0A0A0A)
-    static var white = Color(0xFFFFFF)
+    static var black = UIColor(0x0A0A0A)
+    static var white = UIColor(0xFFFFFF)
     
-    public let primary: Color = black
-    public let secondaryText: Color = black.lighten(percentage: 0.4)
+    public let primary: Color  = NativeColor.dynamicColor(
+        light: Self.black,
+        dark: Self.white
+    ).swiftUI
+    public let secondaryText: Color = black.swiftUI.lighten(percentage: 0.4)
     public let brand: Color = blue
     public let secondary: Color = purple
     public let tertiary: Color = yellow
     public let success: Color = green
     public let error: Color = red
-    public let background: Color = .white //Color(0xF0F0F0, alpha: 1)
+    public let background: Color = NativeColor.dynamicColor(
+        light: Self.white,
+        dark: Self.black
+    ).swiftUI
     
     public func contrasting(_ color: Color) -> Color {
         return cache.contrasts[color] ?? self.primary
@@ -83,11 +89,11 @@ struct CorePaletteCache {
 extension CorePalette {
     
     public var navBarBackground: Color {
-        CorePalette.black
+        CorePalette.black.swiftUI
     }
     
     public var navBarContent: Color {
-        CorePalette.white
+        CorePalette.white.swiftUI
     }
     
 }

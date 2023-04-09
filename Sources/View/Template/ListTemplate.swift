@@ -38,7 +38,7 @@ extension ListTemplate: View {
             nav()
                 .zIndex(2)
             List {
-                Color.white
+                Color.ask.background
                     .frame(height: 2)
                     .listRowSeparator(.hidden)
                 content()
@@ -46,7 +46,7 @@ extension ListTemplate: View {
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, 10)
         }
-        .background(Color.white)
+        .background(Color.ask.background)
     }
 }
 

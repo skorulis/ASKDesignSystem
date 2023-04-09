@@ -6,8 +6,18 @@ import UIKit
 #elseif canImport(AppKit)
 import AppKit
 #endif
+import SwiftUI
 
 extension NativeColor {
+    
+    convenience init(_ hex: UInt, alpha: Double = 1) {
+        self.init(
+          red: Double((hex >> 16) & 0xFF) / 255,
+          green: Double((hex >> 8) & 0xFF) / 255,
+          blue: Double(hex & 0xFF) / 255,
+          alpha: alpha
+        )
+    }
     
     convenience init(hue: CGFloat, saturation: CGFloat, lightness: CGFloat, alpha: CGFloat) {
         precondition(0...1 ~= hue && 0...1 ~= saturation && 0...1 ~= lightness && 0...1 ~= alpha, "input range is out of range 0...1")
@@ -138,5 +148,18 @@ internal extension NativeColor {
         }
 
         return 0.2126 * adjust(colorComponent: ciColor.red) + 0.7152 * adjust(colorComponent: ciColor.green) + 0.0722 * adjust(colorComponent: ciColor.blue)
+    }
+    
+    var swiftUI: Color {
+        return Color(nativeColor: self)
+    }
+    
+    static func dynamicColor(light: NativeColor, dark: NativeColor) -> NativeColor {
+        return NativeColor { traits in
+            switch traits.userInterfaceStyle {
+            case .dark: return dark
+            default: return light
+            }
+        }
     }
 }
