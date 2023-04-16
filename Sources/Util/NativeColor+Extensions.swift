@@ -155,11 +155,15 @@ internal extension NativeColor {
     }
     
     static func dynamicColor(light: NativeColor, dark: NativeColor) -> NativeColor {
+#if canImport(UIKit)
         return NativeColor { traits in
             switch traits.userInterfaceStyle {
             case .dark: return dark
             default: return light
             }
         }
+#else
+        return light
+#endif
     }
 }

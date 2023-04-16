@@ -2,6 +2,11 @@
 
 import Foundation
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 public struct CorePalette {
     
@@ -13,8 +18,8 @@ public struct CorePalette {
     static var purple = Color(0x8e44ad)
     static var yellow = Color(0xf1c40f)
     static var green = Color(0x27ae60)
-    static var black = UIColor(0x0A0A0A)
-    static var white = UIColor(0xFFFFFF)
+    static var black = NativeColor(0x0A0A0A)
+    static var white = NativeColor(0xFFFFFF)
     
     public let primary: Color  = NativeColor.dynamicColor(
         light: Self.black,
