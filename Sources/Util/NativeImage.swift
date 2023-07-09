@@ -18,17 +18,17 @@ public typealias NativeImage = NSImage
 public extension NativeImage {
     static func parseImage(from data: Data) throws -> NativeImage {
     #if os(macOS)
-            if let nsImage = NSImage(data: data) {
-                return nsImage
-            } else {
-                throw NativeImage.LoadingError.parseFailure(data)
-            }
+        if let nsImage = NSImage(data: data) {
+            return nsImage
+        } else {
+            throw NativeImage.LoadingError.parseFailure(data)
+        }
     #else
-            if let uiImage = UIImage(data: data, scale: scale) {
-                return uiImage
-            } else {
-                throw NativeImage.LoadingError.parseFailure(data)
-            }
+        if let uiImage = UIImage(data: data, scale: 1) {
+            return uiImage
+        } else {
+            throw NativeImage.LoadingError.parseFailure(data)
+        }
     #endif
         }
 }
