@@ -11,6 +11,7 @@ public enum NavBarItem {
     case close(_ action: () -> Void)
     case title(_ text: String)
     case iconButton(_ image: Image, () -> Void)
+    case customView(AnyView)
     
 }
 
@@ -29,6 +30,8 @@ extension NavBarItem: View {
             title(text)
         case .iconButton(let image, let action):
             IconButton(action: action, image: image)
+        case let .customView(view):
+            view
         }
     }
     
